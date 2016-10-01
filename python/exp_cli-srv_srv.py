@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import socket
 from datetime import datetime, date, time
@@ -12,10 +12,8 @@ s.bind((TCP_IP, TCP_PORT))
 
 ledValue = {0:'-', 2:'+', 5:'+', 6:'-', 22:'+', 23:'='}
 
-print 'waiting for connection...'
-
 def dataProcessing(inData):
-    if data == '0\n':
+    if inData == '0':
         timeNow = datetime.now()
         try:
             if ledValue[timeNow.hour] == '+':
@@ -27,21 +25,22 @@ def dataProcessing(inData):
         except KeyError:
             ans = 0
     else:
-        ans = 'You say: ' + data + 'but there is not valid request!\n'
-
-
+        ans = 'You say: ' + inData + '\nbut there is not valid request!\n'
+    return u
 while 1:
     s.listen(1)
+    print('waiting for connection...')
     conn, addr = s.accept()
     while 1:
         data = conn.recv(BUFFER_SIZE)
         if not data: 
-            print 'Client was disconnected.'
+            print('Client was disconnected.')
             conn.close()
             break
         else:
-            print 'Client request: ', data
-            print 'Server answer: ', ans
+            ans = dataProcessing(data)
+            print('Client request: ', data)
+            print('Server answer: ', ans)
             conn.send(str(ans))
 conn.close()
 
