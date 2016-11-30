@@ -2,7 +2,7 @@ from smb.SMBConnection import SMBConnection
 from sys import argv
 
 def myMakeConnection(client, host, login='', passwd=''):
-    conn = SMBConnection('tuenut','skyes','FILSHARE', 'STPD8', use_ntlm_v2=True)
+    conn = SMBConnection('user','password','server_name', 'workgroup', use_ntlm_v2=True)
     return conn.connect('192.168.10.11')
 
 def getFilesListFromShareDir(shareName, sharePath):
